@@ -45,3 +45,6 @@ Route::middleware('auth')->group(function(){
 
 });
 
+
+//Route::get('/admin/post/{post}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
+
