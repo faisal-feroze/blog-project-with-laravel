@@ -29,6 +29,37 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
 
+    public function edit(Post $post){
+
+        //$posts = Post::findOrFail($post);
+
+        return view('admin.posts.edit', ['post'=> $post]);
+
+    }
+
+    public function update(Post $post, Request $request){
+
+        $inputs = $request->all();
+
+        if($inputs['post_img']){
+            $inputs['post_img'] = request('post_img')->store('images');
+            $post->post_img = $inputs['post_img'];
+        }
+
+        $post->title = $inputs['title'];
+        $post->body = $inputs['body'];
+
+        //auth()->user()->posts()->save($post);
+
+        $post->save();
+        //$post->update();
+
+        session()->flash('message','Post is Updated');
+
+        return redirect()->route('post.index');
+
+    }
+
     //public function store(Request $request){
     public function store(Request $request){
         // auth()->user();

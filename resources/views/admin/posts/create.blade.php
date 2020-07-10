@@ -8,12 +8,12 @@
 
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" class="form-control" placeholder="Enter a title">
+                <input type="text" name="title" class="form-control" placeholder="Enter a title" required>
             </div>
 
             <div class="form-group">
                 <label for="file">Image File</label>
-                <input type="file" name="post_img" class="form-control-file">
+                <input type="file" name="post_img" class="form-control-file" required>
             </div>
 
             <div class="form-group">
