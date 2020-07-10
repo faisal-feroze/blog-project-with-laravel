@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -29,17 +30,22 @@ class PostController extends Controller
     }
 
     //public function store(Request $request){
-    public function store(){
+    public function store(Request $request){
         // auth()->user();
         // dd(request()->all());
 
-        $inputs = request()->validate([
-            'title'=> 'required|min:8',
-            'post_img'=> 'mimes:jpeg,png',
-            'body'=> 'required'
-        ]);
+        // $inputs = request()->validate([
+        //     'title'=> 'required|min:8',
+        //     //'post_img'=> 'mimes:jpeg,png',
+        //     'post_img'=> 'file',
+        //     'body'=> 'required'
+        // ]);
 
-        if(request('post_img')){
+        
+
+        $inputs = $request->all();
+
+        if($inputs['post_img']){
             $inputs['post_img'] = request('post_img')->store('images');
         }
 
@@ -48,8 +54,37 @@ class PostController extends Controller
 
         auth()->user()->posts()->create($inputs);
 
-        return back();
+        //return back();
+
+        //Session::flash('post-created-message','New Post is Created');
+
+        session()->flash('post-created-message','New Post is Created');
+
+        return redirect()->route('post.index');
 
 
     }
+
+    public function destroy(Post $post){
+
+        $post->delete();
+
+        //Session::flash('message','Post is deleted');
+
+        session()->flash('message','Post is deleted');
+
+        return back();
+
+    }
+
+    // public function destroy(Post $post, Request $request){
+
+    //     $post->delete();
+
+    //     $request->session()->flash('message','Post is deleted');
+
+    //     return back();
+
+    // }
+    
 }

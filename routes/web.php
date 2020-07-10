@@ -37,5 +37,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/admin/post', 'PostController@index')->name('post.index');
 
+    Route::delete('/admin/post/{post}/destroy', 'PostController@destroy')->name('post.destroy');
+
 });
 
